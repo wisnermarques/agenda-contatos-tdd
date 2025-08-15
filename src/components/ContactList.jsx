@@ -23,6 +23,7 @@ const ContactList = () => {
             {contacts.map((c) => (
                 <li key={c.id}>
                     <strong>{c.nome}</strong> — {c.email} — {c.telefone}
+                    <button>Editar</button>
                     <button onClick={() => handleDelete(c.id)}>Remover</button>
                 </li>
             ))}

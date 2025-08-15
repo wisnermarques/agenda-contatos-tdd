@@ -6,6 +6,17 @@ export const getContacts = async () => {
   return data;
 };
 
+export const getContactById = async (id) => {
+  const { data, error } = await supabase
+    .from('contatos')
+    .select('*')
+    .eq('id', id)
+    .single(); // garante que retorna só um objeto
+
+  if (error) throw error;
+  return data;
+};
+
 export const addContact = async (contact) => {
   const { data, error } = await supabase.from('contatos').insert([contact]);
   if (error) throw error;
@@ -14,5 +25,16 @@ export const addContact = async (contact) => {
 
 export const deleteContact = async (id) => {
   const { error } = await supabase.from('contatos').delete().eq('id', id);
+  if (error) throw error;
+};
+
+export const updateContact = async (id, contact) => {
+  // Remove formatação do telefone antes de enviar
+  const contactToUpdate = {
+    ...contact,
+    telefone: contact.telefone.replace(/\D/g, '')
+  };
+
+  const { error } = await supabase.from('contatos').update(contactToUpdate).eq('id', id);
   if (error) throw error;
 };

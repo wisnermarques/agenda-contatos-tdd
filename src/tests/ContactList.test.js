@@ -31,7 +31,7 @@ test('exibe lista de contatos', async () => {
 });
 
 test('deleta um contato ao clicar em "Remover"', async () => {
-    const deleteContactMock = jest.fn();
+    const deleteContactMock = jest.fn().mockResolvedValue(); // mock async
     service.getContacts.mockResolvedValue([
         { id: '1', nome: 'Ana', email: 'ana@email.com', telefone: '123' },
     ]);
@@ -43,6 +43,14 @@ test('deleta um contato ao clicar em "Remover"', async () => {
         expect(screen.getByText('Ana')).toBeInTheDocument();
     });
 
+    // Dispara o clique
     fireEvent.click(screen.getByText(/remover/i));
+
+    // Garante que a função de serviço foi chamada
     expect(deleteContactMock).toHaveBeenCalledWith('1');
+
+    // Aguarda atualização da UI (removeu o contato)
+    await waitFor(() => {
+        expect(screen.queryByText('Ana')).not.toBeInTheDocument();
+    });
 });
