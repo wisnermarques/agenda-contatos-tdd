@@ -1,7 +1,8 @@
 import { NavLink, Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
-import ContactForm from './components/ContactForm';
 import ContactList from './components/ContactList';
 import { addContact } from './services/contactService';
+import EditContact from './components/EditContact';
+import ContactForm from './components/ContactForm';
 
 const Home = () => <h2>Bem-vindo ao Gerenciador de Contatos</h2>;
 
@@ -56,6 +57,7 @@ const AppRoutes = () => {
         <Route path='/' element={<Home />} />
         <Route path='/contatos' element={<ContactList />} />
         <Route path='/novo' element={<ContactForm onSubmit={handleAddContact} />} />
+        <Route path="/editar/:id" element={<EditContact />} />
       </Routes>
     </>
   );

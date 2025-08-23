@@ -93,7 +93,13 @@ const ContactList = () => {
                   <td>{contact.telefone}</td>
                   <td className="text-end">
                     <div className="d-flex gap-2 justify-content-end">
-                      <i className="bi bi-pencil-square"></i>
+                      <Link
+                        to={`/editar/${contact.id}`}
+                        className="btn btn-outline-primary btn-sm"
+                        title="Editar"
+                      >
+                        <i className="bi bi-pencil-square"></i>
+                      </Link>
                       <button
                         className="btn btn-outline-danger btn-sm"
                         onClick={() => handleDelete(contact.id)}
@@ -136,7 +142,13 @@ const ContactList = () => {
                     </div>
                     <div className="d-flex gap-2">
 
-                      <i className="bi bi-pencil-square"></i>
+                      <Link
+                        to={`/editar/${contact.id}`}
+                        className="btn btn-outline-primary btn-sm"
+                        title="Editar"
+                      >
+                        <i className="bi bi-pencil-square"></i>
+                      </Link>
 
                       <button
                         className="btn btn-outline-danger btn-sm"
