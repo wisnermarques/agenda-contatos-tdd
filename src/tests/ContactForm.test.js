@@ -15,14 +15,14 @@ test('chama onSubmit com dados corretos', () => {
 
   fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'Ana' } });
   fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'ana@email.com' } });
-  fireEvent.change(screen.getByLabelText(/telefone/i), { target: { value: '11999999999' } });
+  fireEvent.change(screen.getByLabelText(/telefone/i), { target: { value: '(11) 9 9999-9999' } });
 
   fireEvent.submit(screen.getByRole('form'));
 
   expect(handleSubmit).toHaveBeenCalledWith({
     nome: 'Ana',
     email: 'ana@email.com',
-    telefone: '11999999999'
+    telefone: '(11) 9 9999-9999'
   });
 });
 

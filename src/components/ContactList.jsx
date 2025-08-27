@@ -52,7 +52,7 @@ const ContactList = () => {
     );
   }
 
-  if (contacts.length === 0) {
+  if (contacts.length === 0) {  // 1 == '1' ; 1 === 1
     return (
       <div className="container alert alert-info my-4 text-center" role="alert">
         Nenhum contato cadastrado.

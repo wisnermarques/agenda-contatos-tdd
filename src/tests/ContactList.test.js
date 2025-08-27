@@ -1,14 +1,25 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import ContactList from '../components/ContactList';
 import * as service from '../services/contactService';
+import { MemoryRouter } from 'react-router-dom';
 
 jest.mock('../services/contactService');
+
+// Função auxiliar para renderizar com router
+const renderWithRouter = (ui) => render(
+<MemoryRouter>{ui}</MemoryRouter>
+);
+
+// Ignorar warnings do React Router
+beforeAll(() => {
+    jest.spyOn(console, 'warn').mockImplementation(() => { });
+});
 
 test('exibe mensagem quando não há contatos cadastrados', async () => {
     // Simula resposta vazia do serviço
     service.getContacts.mockResolvedValue([]);
 
-    render(<ContactList />);
+    renderWithRouter(<ContactList />);
 
     // Aguarda renderização assíncrona
     await waitFor(() => {
@@ -22,7 +33,7 @@ test('exibe lista de contatos', async () => {
         { id: '2', nome: 'João', email: 'joao@email.com', telefone: '987654321' },
     ]);
 
-    render(<ContactList />);
+    renderWithRouter(<ContactList />);
 
     await waitFor(() => {
         expect(screen.getByText('Ana')).toBeInTheDocument();
@@ -37,7 +48,7 @@ test('deleta um contato ao clicar em "Remover"', async () => {
     ]);
     service.deleteContact = deleteContactMock;
 
-    render(<ContactList />);
+    renderWithRouter(<ContactList />);
 
     await waitFor(() => {
         expect(screen.getByText('Ana')).toBeInTheDocument();
