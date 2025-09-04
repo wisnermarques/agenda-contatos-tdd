@@ -60,23 +60,27 @@ test('deleta um contato ao clicar em "Remover"', async () => {
 
     renderWithRouter(<ContactList />);
 
-    // Esperar o contato ser carregado verificando um elemento único
+    // Esperar a lista carregar
     await screen.findByText('Lista de Contatos');
 
-    // Verificar que o contato está presente antes de deletar
+    // Verificar que o contato aparece pelo menos uma vez
     const anaElementsBefore = screen.getAllByText('Ana');
     expect(anaElementsBefore.length).toBeGreaterThan(0);
 
-    // Encontrar todos os botões de remover e clicar no primeiro
-    const removeButtons = screen.getAllByTitle(/remover/i);
-    fireEvent.click(removeButtons[0]);
+    // Clicar no botão "Remover"
+    const removeButton = screen.getAllByTitle(/remover/i)[0];
+    fireEvent.click(removeButton);
 
-    // Verificar se a função de deletar foi chamada
+    // Confirmar exclusão no modal (seleciona o botão)
+    const confirmButton = await screen.findByRole('button', { name: /excluir/i });
+    fireEvent.click(confirmButton);
+
+    // Verificar se deleteContact foi chamado
     await waitFor(() => {
         expect(deleteContactMock).toHaveBeenCalledWith('1');
     });
 
-    // Verificar se o contato foi removido da lista
+    // Verificar se contato foi removido
     await waitFor(() => {
         const anaElementsAfter = screen.queryAllByText('Ana');
         expect(anaElementsAfter.length).toBe(0);
