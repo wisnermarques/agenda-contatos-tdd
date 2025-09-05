@@ -34,7 +34,7 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
   };
 
   return (
-    <form role="form" onSubmit={handleSubmit} className="mt-3 p-3 border rounded">
+    <form role="form" onSubmit={handleSubmit} className="container mt-3 p-3 border rounded">
       <div className="mb-3">
         <label htmlFor="nome" className="form-label">Nome</label>
         <input
